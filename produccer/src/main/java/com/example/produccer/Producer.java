@@ -6,22 +6,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api")
 public class Producer {
 
-    private KafkaTemplate<String,String> kafkaTemplate;
+    private KafkaTemplate<String,RiderLocation> kafkaTemplate;
 
-    public Producer(KafkaTemplate<String, String> kafkaTemplate) {
+    public Producer(KafkaTemplate<String, RiderLocation> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
     @PostMapping("send")
     public String sendMessage(@RequestParam String message){
-         kafkaTemplate.send("mytopic",message);
-         return message;
+        RiderLocation riderLocation=new RiderLocation("rider1",14.24,53.19);
+         kafkaTemplate.send("new-topic",riderLocation);
+         return "send: "+riderLocation.getRiderId();
     }
 
 

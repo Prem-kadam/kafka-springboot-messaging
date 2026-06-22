@@ -11,4 +11,9 @@ public class Consumer {
         System.out.println("Recieve Message:"+ message);
     }
 
+    @KafkaListener(topics = "new-topic" ,groupId="new-group")
+    public void listenRider(RiderLocation location){
+        System.out.println("Recieve :"+ location.getRiderId() + "+ " +location.getLatitude() +" +"+location.getLongitude());
+    }
+
 }
